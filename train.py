@@ -26,7 +26,7 @@ if __name__ == '__main__':
                         help='save checkpoint step size')
     parser.add_argument("-n", "--n_steps", dest="n_steps", type=int, default=None,
                         help='test steps')
-    parser.add_argument("--corr_type", dest="corr_type", type=str, default="tf",
+    parser.add_argument("--corr_type", dest="corr_type", type=str, default="cuda",
                         help="correlation layer realization - 'tf' or 'cuda'")
 
     args = parser.parse_args()
@@ -35,7 +35,7 @@ if __name__ == '__main__':
 
     tf.logging.set_verbosity(tf.logging.ERROR)
     dispnet = DispNet(mode="traintest", ckpt_path=args.checkpoint_path, dataset=ft3d_dataset,
-                      batch_size=args.batch_size, is_corr=CORR, corr_type="cuda")
+                      batch_size=args.batch_size, is_corr=CORR, corr_type=args.corr_type)
 
     ckpt = tf.train.latest_checkpoint(args.checkpoint_path)
     if not ckpt:
@@ -113,7 +113,7 @@ if __name__ == '__main__':
                     feed_dict[dispnet.mean_loss] = l_mean
                     s = sess.run(dispnet.merged_summary, feed_dict=feed_dict)
                     writer.add_summary(s, step)
-                    logging.debug("iter: %d, f/b pass time: %f, loss: %f, error %f" %
+                    logging.info("iter: %d, f/b pass time: %f, loss: %f, error %f" %
                                   (step, ((time.time() - start) / float(log_step)), l_mean, err))
                     l_mean = 0
                     start = time.time()
