@@ -159,7 +159,7 @@ def build_main_graph(left_image_batch, right_image_batch, is_corr=True, corr_typ
             conv1 = conv2d(tf.concat([left_image_batch, right_image_batch], axis=3),
                            [7, 7, 3, 64], strides=2)
         with tf.variable_scope("conv2") as scope:
-            conv2 = conv2d(conv1, [5, 5, 64, 128], strides=2)            
+            conv2 = conv2d(conv1, [5, 5, 64, 128], strides=2)
         with tf.variable_scope("conv3"):
             conv3 = conv2d(conv2, [5, 5, 128, 256], strides=2)
     with tf.variable_scope("conv3"):
@@ -264,7 +264,7 @@ class DispNet(object):
             left_image_batch, right_image_batch, target = self.inputs
             self.predictions = build_main_graph(left_image_batch, right_image_batch,
                                                 is_corr=self.is_corr, corr_type=self.corr_type)
-            self.total_loss, self.loss, self.error = build_loss(self.predictions, target, 
+            self.total_loss, self.loss, self.error = build_loss(self.predictions, target,
                                                                 self.loss_weights,
                                                                 weight_decay)
             tf.summary.scalar('error', self.error)

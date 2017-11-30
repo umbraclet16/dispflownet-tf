@@ -30,7 +30,7 @@ if __name__ == '__main__':
                         help="correlation layer realization - 'tf' or 'cuda'")
 
     args = parser.parse_args()
-    
+
     ft3d_dataset = ft3d_filenames(args.dataset_path)
 
     tf.logging.set_verbosity(tf.logging.ERROR)
@@ -118,9 +118,9 @@ if __name__ == '__main__':
                     l_mean = 0
                     start = time.time()
                 if step % save_step == 0:
-                    logging.info("saving to file %s." % 
-                                 (os.path.join(args.checkpoint_path, MODEL_NAME)))
-                    dispnet.saver.save(sess, os.path.join(args.checkpoint_path, MODEL_NAME),
+                    logging.info("saving to file %s." %
+                                 (os.path.join(args.checkpoint_path, model_name)))
+                    dispnet.saver.save(sess, os.path.join(args.checkpoint_path, model_name),
                                        global_step=step)
                 if step % test_step == 0:
                     test_err = 0
