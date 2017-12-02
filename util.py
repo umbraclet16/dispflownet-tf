@@ -47,8 +47,8 @@ def ft3d_filenames(path):
     ft3d_path = path
     ft3d_samples_filenames = {}
     for prefix in ["TRAIN", "TEST"]:
-        ft3d_train_data_path = os.path.join(ft3d_path, 'frames_cleanpass/TRAIN')
-        ft3d_train_labels_path = os.path.join(ft3d_path, 'disparity/TRAIN')
+        ft3d_train_data_path = os.path.join(ft3d_path, 'frames_cleanpass/'+prefix)
+        ft3d_train_labels_path = os.path.join(ft3d_path, 'disparity/'+prefix)
         left_images_filenames = sorted(glob.glob(ft3d_train_data_path + "/*/*/left/*"))
         right_images_filenames = sorted(glob.glob(ft3d_train_data_path + "/*/*/right/*"))
         disparity_filenames = sorted(glob.glob(ft3d_train_labels_path + "/*/*/left/*"))
