@@ -291,4 +291,4 @@ class DispNet(object):
             self.test_error = tf.placeholder(tf.float32)
             tf.summary.scalar('test_error', self.test_error)
             self.merged_summary = tf.summary.merge_all()
-            self.saver = tf.train.Saver(max_to_keep=2)
+            self.saver = tf.train.Saver(max_to_keep=2, keep_checkpoint_every_n_hours=2)
