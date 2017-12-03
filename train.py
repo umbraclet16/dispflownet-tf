@@ -55,9 +55,9 @@ if __name__ == '__main__':
                         [.2, 1., .5, 0., 0., 0.],
                         [1., .5, 0., 0., 0., 0.],
                         [1., 0., 0., 0., 0., 0.]]
-    lr_schedule = [1e-4] * 5
-    for i in range(20):
-        lr_schedule.extend([(lr_schedule[-1] / 2.)] * 3)
+    lr_schedule = [1e-4] * 8 # lamda = 1e-4 for the first 400k iters
+    for i in range(10):
+        lr_schedule.extend([(lr_schedule[-1] / 2.)] * 4) # divided by 2 every 200k iters
 
     log_step = args.log_step
     save_step = args.save_step
@@ -90,11 +90,13 @@ if __name__ == '__main__':
                 step = 0
             schedule_current = min(step / schedule_step, len(weights_schedule)-1)
             feed_dict[dispnet.loss_weights] = np.array(weights_schedule[schedule_current])
+            schedule_current = min(step / schedule_step, len(lr_schedule)-1)
             feed_dict[dispnet.learning_rate] = lr_schedule[schedule_current]
             while step < 14e5: # 5e5
                 if step % schedule_step == 0:
                     schedule_current = min(step / schedule_step, len(weights_schedule)-1)
                     feed_dict[dispnet.loss_weights] = np.array(weights_schedule[schedule_current])
+                    schedule_current = min(step / schedule_step, len(lr_schedule)-1)
                     feed_dict[dispnet.learning_rate] = lr_schedule[schedule_current]
                     logging.info("iter: %d, switching weights:" % step)
                     logging.info(feed_dict[dispnet.loss_weights])
