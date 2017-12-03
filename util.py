@@ -58,21 +58,6 @@ def ft3d_filenames(path):
                                            disparity_filenames[i]) for i in range(len(left_images_filenames))]
     return ft3d_samples_filenames
 
-def driving_filenames(path):
-    driving_path = path
-    driving_samples_filenames = {}
-    for prefix in ["TRAIN", "TEST"]:
-        driving_train_data_path = os.path.join(driving_path, 'frames_cleanpass/15mm_focallength/scene_forwards/fast')
-        driving_train_labels_path = os.path.join(driving_path, 'disparity/15mm_focallength/scene_forwards/fast')
-        left_images_filenames = sorted(glob.glob(driving_train_data_path + "/left/*"))
-        right_images_filenames = sorted(glob.glob(driving_train_data_path + "/right/*"))
-        disparity_filenames = sorted(glob.glob(driving_train_labels_path + "/left/*"))
-
-        driving_samples_filenames[prefix] = [(left_images_filenames[i],
-                                           right_images_filenames[i],
-                                           disparity_filenames[i]) for i in range(len(left_images_filenames))]
-    return driving_samples_filenames
-
 def init_logger(log_path, name="dispnet"):
     root = logging.getLogger()
     root.setLevel(logging.NOTSET)
