@@ -134,6 +134,7 @@ if __name__ == '__main__':
                     test_err = test_err / float(N_test)
                     logging.info("Test error %f" % test_err)
                     feed_dict[dispnet.test_error] = test_err
+                    feed_dict[dispnet.training_mode] = True
 
         except tf.errors.OutOfRangeError:
             logging.INFO('Done training for %d epochs, %d steps.' % (FLAGS.num_epochs, step))
